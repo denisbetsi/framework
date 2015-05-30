@@ -1010,8 +1010,6 @@ Framework.prototype.route = function(url, funcExecute, flags, length, middleware
 	        self.routes.web.push(newroute);
 	}
 
-	self.routes.web.push();
-
 	self.emit('route-add', 'web', self.routes.web[self.routes.web.length - 1]);
 
 	if (_controller.length === 0)
