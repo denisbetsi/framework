@@ -2449,7 +2449,7 @@ View.prototype.load = function(name, filename, language) {
 	var self = this;
 
 	// Is dynamic content?
-	if (name.indexOf('@{') !== -1 || name.indexOf('<') !== -1)
+	if (name.substring(0,1) == "@{" || name.substring(0,1) == "<"|| name.substring(0,1) == "!") 
 		return self.dynamic(name, language);
 
 	var precompiled = framework.routes.views[name];

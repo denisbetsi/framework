@@ -960,7 +960,7 @@ Framework.prototype.route = function(url, funcExecute, flags, length, middleware
 	if (name[1] === '#')
 		name = name.substring(1);
 
-	self.routes.web.push({
+	var newroute = {
 		name: name,
 		priority: priority,
 		schema: schema,
@@ -993,8 +993,24 @@ Framework.prototype.route = function(url, funcExecute, flags, length, middleware
 		isUPLOAD: flags.indexOf('upload') !== -1,
 		isSYSTEM: url.startsWith('/#'),
 		options: options
-	});
+	}
 
+	var found = false;
+    for(var i=0;i<self.routes.web.length;i++){
+        var r = self.routes.web[i];
+        if(r.url.toString()==newroute.url.toString()){
+            // Found it
+            found = true;
+            self.routes.web[i] = newroute;
+            return;
+        }
+    }
+    
+    if(!found){
+        self.routes.web.push(newroute);
+    }
+
+	
 	self.emit('route-add', 'web', self.routes.web[self.routes.web.length - 1]);
 
 	if (_controller.length === 0)
