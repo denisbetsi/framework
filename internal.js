@@ -2484,6 +2484,7 @@ View.prototype.load = function(name, filename, language) {
 */
 View.prototype.dynamic = function(content, language) {
 
+	if(content.substring(0,1) == "!")content=content.substring(1);
 	var self = this;
 	var key = content.md5();
 	var generator = framework.temporary.views[key] || null;

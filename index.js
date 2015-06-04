@@ -3111,7 +3111,7 @@ Framework.prototype.responseFile = function(req, res, filename, downloadName, he
 	if (RELEASE && !res.getHeader('Expires'))
 		returnHeaders['Expires'] = new Date().add('M', 3);
 
-	returnHeaders['Vary'] = 'Accept-Encoding';
+	// returnHeaders['Vary'] = 'Accept-Encoding';
 
 	if (headers)
 		utils.extend(returnHeaders, headers, true);
@@ -3246,7 +3246,7 @@ Framework.prototype.responsePipe = function(req, res, url, headers, timeout, cal
 			res.setHeader('Content-Disposition', attachment);
 
 		res.setHeader(RESPONSE_HEADER_CONTENTTYPE, contentType);
-		res.setHeader('Vary', 'Accept-Encoding');
+		// res.setHeader('Vary', 'Accept-Encoding');
 
 		res.on('error', function() {
 			response.close();
@@ -3611,7 +3611,7 @@ Framework.prototype.responseStream = function(req, res, contentType, stream, dow
 	if (RELEASE)
 		returnHeaders['Expires'] = new Date().add('M', 3);
 
-	returnHeaders['Vary'] = 'Accept-Encoding';
+	// returnHeaders['Vary'] = 'Accept-Encoding';
 
 	if (headers)
 		utils.extend(returnHeaders, headers, true);
@@ -3975,7 +3975,8 @@ Framework.prototype.responseContent = function(req, res, code, contentBody, cont
 	var gzip = compress ? accept.lastIndexOf('gzip') !== -1 : false;
 
 	returnHeaders[RESPONSE_HEADER_CACHECONTROL] = 'private';
-	returnHeaders['Vary'] = 'Accept-Encoding';
+	if(!res.connection._httpMessage._headers.vary)
+		returnHeaders['Vary'] = 'Accept-Encoding';
 
 	if (headers)
 		utils.extend(returnHeaders, headers, true);
