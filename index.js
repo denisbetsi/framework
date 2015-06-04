@@ -3975,7 +3975,7 @@ Framework.prototype.responseContent = function(req, res, code, contentBody, cont
 	var gzip = compress ? accept.lastIndexOf('gzip') !== -1 : false;
 
 	returnHeaders[RESPONSE_HEADER_CACHECONTROL] = 'private';
-	if(!res.connection._httpMessage._headers.vary)
+	if(res.connection&&res.connection._httpMessage&&res.connection._httpMessage._headers&&!res.connection._httpMessage._headers.vary)
 		returnHeaders['Vary'] = 'Accept-Encoding';
 
 	if (headers)
