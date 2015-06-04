@@ -189,7 +189,7 @@ function Framework() {
 
 	this.id = null;
 	this.version = 1800;
-	this.version_header = '1.8.0';
+	this.version_header = '1.8.1';
 
 	var version = process.version.toString().replace('v', '').replace(/\./g, '');
 
@@ -3219,7 +3219,7 @@ Framework.prototype.responsePipe = function(req, res, url, headers, timeout, cal
 	if (headers)
 		utils.extend(h, headers, true);
 
-	h['X-Powered-By'] = 'total.js v' + self.version_header;
+	// h['X-Powered-By'] = 'total.js v' + self.version_header;
 
 	var options = {
 		protocol: uri.protocol,
@@ -4512,7 +4512,7 @@ Framework.prototype._request = function(req, res) {
 	req.xhr = headers['x-requested-with'] === 'XMLHttpRequest';
 
 	res.success = false;
-	res.setHeader('X-Powered-By', 'total.js v' + self.version_header);
+	// res.setHeader('X-Powered-By', 'total.js v' + self.version_header);
 
 	if (self.isDebug)
 		res.setHeader('Mode', 'debug');
@@ -5114,7 +5114,7 @@ Framework.prototype.assert = function(name, url, flags, callback, data, cookies,
 	}
 
 	headers['X-Assertion-Testing'] = '1';
-	headers['X-Powered-By'] = 'total.js v' + self.version_header;
+	// headers['X-Powered-By'] = 'total.js v' + self.version_header;
 
 	if (cookies) {
 		var builder = [];
