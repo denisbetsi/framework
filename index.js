@@ -2365,7 +2365,7 @@ Framework.prototype.onMeta = function() {
 
 		switch (i) {
 			case 0:
-				builder += '<title>' + (arg + (self.url !== '/' && !self.config['allow-custom-titles'] ? ' - ' + self.config.name : '')) + '</title>';
+				builder += '<title>' + (arg) + '</title>';
 				break;
 			case 1:
 				builder += '<meta name="description" content="' + arg + '" />';
@@ -2374,9 +2374,23 @@ Framework.prototype.onMeta = function() {
 				builder += '<meta name="keywords" content="' + arg + '" />';
 				break;
 			case 3:
-				var tmp = arg.substring(0, 6);
-				var img = tmp === 'http:/' || tmp === 'https:' || arg.substring(0, 2) === '//' ? arg : self.hostname(self.routeImage(arg));
-				builder += '<meta property="og:image" content="' + img + '" /><meta name="twitter:image" content="' + img + '" />';
+				if(typeof(arguments[i])=='object'){
+					// Array of objects
+					arguments[i].forEach(function(item){
+						var lineitem = '<meta';
+						for (var objprop in item) {
+		            		if (item.hasOwnProperty(objprop)) {
+		            			lineitem += ' ' + objprop + '="' + item[objprop] + '"'
+		            		}
+		            	}
+
+						builder += lineitem + ' />';
+					});
+				}else{
+					var tmp = arg.substring(0, 6);
+					var img = tmp === 'http:/' || tmp === 'https:' || arg.substring(0, 2) === '//' ? arg : self.hostname(self.routeImage(arg));
+					builder += '<meta property="og:image" content="' + img + '" /><meta name="twitter:image" content="' + img + '" />';
+				}
 				break;
 		}
 	}
@@ -2813,6 +2827,7 @@ Framework.prototype.responseStatic = function(req, res, done) {
 
 	var extension = req.extension;
 	if (!self.config['static-accepts']['.' + extension]) {
+		console.log('1 : extension is ' + extension + ' and file is ' + JSON.stringify(self.config['static-accepts']));
 		self.response404(req, res);
 		if (done)
 			done();
@@ -6221,7 +6236,6 @@ Framework.prototype.worker = function(name, id, timeout) {
 		return fork;
 
 	fork.__timeout = setTimeout(function() {
-
 		fork.kill();
 		fork = null;
 
@@ -8646,6 +8660,7 @@ Controller.prototype.$meta = function() {
 
 	framework.emit('controller-render-meta', self);
 	var repository = self.repository;
+
 	return framework.onMeta.call(self, repository[REPOSITORY_META_TITLE], repository[REPOSITORY_META_DESCRIPTION], repository[REPOSITORY_META_KEYWORDS], repository[REPOSITORY_META_IMAGE]);
 };
 

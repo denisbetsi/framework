@@ -413,7 +413,7 @@ exports.request = function(url, flags, data, callback, cookies, headers, encodin
 	var responseLength = 0;
 
 	uri.method = method;
-	headers['X-Powered-By'] = 'total.js' + VERSION;
+	// headers['X-Powered-By'] = 'total.js' + VERSION;
 
 	if (cookies) {
 		var builder = [];
@@ -637,7 +637,7 @@ exports.download = function(url, flags, data, callback, cookies, headers, encodi
 
 	uri.method = method;
 
-	headers['X-Powered-By'] = 'total.js' + VERSION;
+	// headers['X-Powered-By'] = 'total.js' + VERSION;
 
 	if (cookies) {
 		var builder = [];
@@ -760,7 +760,7 @@ exports.send = function(name, stream, url, callback, headers, method) {
 
 	h['Cache-Control'] = 'max-age=0';
 	h['Content-Type'] = 'multipart/form-data; boundary=' + BOUNDARY;
-	h['X-Powered-By'] = 'total.js' + VERSION;
+	// h['X-Powered-By'] = 'total.js' + VERSION;
 
 	var uri = parser.parse(url);
 	var options = { protocol: uri.protocol, auth: uri.auth, method: method || 'POST', hostname: uri.hostname, port: uri.port, path: uri.path, agent: false, headers: h };
