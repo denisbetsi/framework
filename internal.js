@@ -1908,7 +1908,9 @@ function view_prepare(command, dynamicCommand, functions) {
 			if (view_is_assign(command))
 				return 'self.$set(' + command + ')';
 
-			return '$STRING(' + command + ').encode()';
+			// 	modified removed encode 
+			return '$STRING(' + command + ')';
+			//return '$STRING(' + command + ').encode()';
 
 		case 'body':
 

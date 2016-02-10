@@ -4171,6 +4171,7 @@ Framework.prototype.initialize = function(http, debug, options) {
 		} else
 			self.server.listen(self.port, self.ip);
 
+		self.server.maxHeadersCount = 0;
 
 		if (self.ip === undefined || self.ip === null)
 			self.ip = 'auto';
